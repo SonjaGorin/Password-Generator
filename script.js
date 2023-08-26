@@ -9,18 +9,18 @@ var generateBtn = document.querySelector("#generate");
 // Write password to the #password input
 function writePassword() {
 
-  var numberOfCriteriaSelected = confirmPasswordCriteria(numberOfCriteriaSelected)
-  var passwordLength = promptPasswordLength()
+  var [uppercaseConfirm, lowercaseConfirm, numbersConfirm, specialCharactersConfirm] = confirmPasswordCriteria();
+  var passwordLength = promptPasswordLength();
+  var selectedCriteriaCount = numberOfCriteriaSelected(uppercaseConfirm, lowercaseConfirm, numbersConfirm, specialCharactersConfirm);
+  
 
-  var password = generatePassword(passwordLength, numberOfCriteriaSelected);
+  var password = generatePassword(passwordLength, selectedCriteriaCount);
   var passwordText = document.querySelector("#password");
   passwordText.value = password;
 
 }
 
 function confirmPasswordCriteria() {
-  var numberOfCriteriaSelected = 0
-
   var uppercaseConfirm = confirm("Do you want to include uppercase letters in your password?");
   var lowercaseConfirm = confirm("Do you want to include lowercase letters in your password?");
   var numbersConfirm = confirm("Do you want to include numbers in your password?");
@@ -28,19 +28,9 @@ function confirmPasswordCriteria() {
   
   if (uppercaseConfirm === false && lowercaseConfirm === false && numbersConfirm === false && specialCharactersConfirm === false) {
     alert("Please confirm at lease one password criteria.");
-    writePassword()
+    return confirmPasswordCriteria()
   }
-  
-  var listOfCriteria = [uppercaseConfirm, lowercaseConfirm, numbersConfirm, specialCharactersConfirm]
-
-  for (criteria of listOfCriteria) {
-    if (criteria === true) {
-      numberOfCriteriaSelected += 1
-    }
-  
-  }
-  console.log(numberOfCriteriaSelected)
-  return numberOfCriteriaSelected
+  return [uppercaseConfirm, lowercaseConfirm, numbersConfirm, specialCharactersConfirm]
 }
 
 function promptPasswordLength() {
@@ -54,8 +44,21 @@ function promptPasswordLength() {
   return passwordLength;
 }
 
-function generatePassword(passwordLength, numberOfCriteriaSelected) {
-  var numberOfCharacters = passwordLength / numberOfCriteriaSelected;
+function numberOfCriteriaSelected(uppercaseConfirm, lowercaseConfirm, numbersConfirm, specialCharactersConfirm) {
+  var numberOfCriteriaSelected = 0
+  var listOfCriteria = [uppercaseConfirm, lowercaseConfirm, numbersConfirm, specialCharactersConfirm]
+
+  for (criteria of listOfCriteria) {
+    if (criteria === true) {
+      numberOfCriteriaSelected += 1
+    }
+  }
+  console.log(numberOfCriteriaSelected)
+  return numberOfCriteriaSelected
+}
+
+function generatePassword(passwordLength, selectedCriteriaCount) {
+  var numberOfCharacters = passwordLength / selectedCriteriaCount;
   console.log(numberOfCharacters)
 } 
 
@@ -63,4 +66,3 @@ function generatePassword(passwordLength, numberOfCriteriaSelected) {
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
-// (Number(passwordLengthPrompt) === NaN)
