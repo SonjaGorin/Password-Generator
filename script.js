@@ -8,7 +8,19 @@ var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
-  
+
+  var numberOfCriteriaSelected = confirmPasswordCriteria(numberOfCriteriaSelected)
+  var passwordLength = promptPasswordLength()
+
+  var password = generatePassword(passwordLength, numberOfCriteriaSelected);
+  var passwordText = document.querySelector("#password");
+  passwordText.value = password;
+
+}
+
+function confirmPasswordCriteria() {
+  var numberOfCriteriaSelected = 0
+
   var uppercaseConfirm = confirm("Do you want to include uppercase letters in your password?");
   var lowercaseConfirm = confirm("Do you want to include lowercase letters in your password?");
   var numbersConfirm = confirm("Do you want to include numbers in your password?");
@@ -18,14 +30,17 @@ function writePassword() {
     alert("Please confirm at lease one password criteria.");
     writePassword()
   }
+  
+  var listOfCriteria = [uppercaseConfirm, lowercaseConfirm, numbersConfirm, specialCharactersConfirm]
 
-  promptPasswordLength()
-
-  // var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-
-  passwordText.value = password;
-
+  for (criteria of listOfCriteria) {
+    if (criteria === true) {
+      numberOfCriteriaSelected += 1
+    }
+  
+  }
+  console.log(numberOfCriteriaSelected)
+  return numberOfCriteriaSelected
 }
 
 function promptPasswordLength() {
@@ -33,12 +48,16 @@ function promptPasswordLength() {
   var passwordLength = Number(passwordLengthPrompt);
   if (passwordLength < 8 || passwordLength > 128 || isNaN(passwordLengthPrompt) === true) {
     alert("Your entry is not valid. Please choose number between 8 and 128.");
-    promptPasswordLength();
+    return promptPasswordLength();
   }
+  console.log(passwordLength)
   return passwordLength;
 }
 
-  
+function generatePassword(passwordLength, numberOfCriteriaSelected) {
+  var numberOfCharacters = passwordLength / numberOfCriteriaSelected;
+  console.log(numberOfCharacters)
+} 
 
 
 // Add event listener to generate button
