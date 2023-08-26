@@ -10,15 +10,16 @@ var generateBtn = document.querySelector("#generate");
 function writePassword() {
   
   var uppercaseConfirm = confirm("Do you want to include uppercase letters in your password?");
-  alert(uppercaseConfirm);
   var lowercaseConfirm = confirm("Do you want to include lowercase letters in your password?");
-  alert(lowercaseConfirm);
   var numbersConfirm = confirm("Do you want to include numbers in your password?");
-  alert(numbersConfirm);
   var specialCharactersConfirm = confirm("Do you want to include special characters in your password?");
-  alert(specialCharactersConfirm);
-  var passwordLengthPrompt = prompt("Choose the length of your password. Type th enumber between 8 and 128.");
-  alert(passwordLengthPrompt);
+  
+  if (uppercaseConfirm === false && lowercaseConfirm === false && numbersConfirm === false && specialCharactersConfirm === false) {
+    alert("Please confirm at lease one password criteria.");
+    writePassword()
+  }
+
+  promptPasswordLength()
 
   // var password = generatePassword();
   var passwordText = document.querySelector("#password");
@@ -27,5 +28,20 @@ function writePassword() {
 
 }
 
+function promptPasswordLength() {
+  var passwordLengthPrompt = prompt("Choose the length of your password. Type the number between 8 and 128.", "enter number here");
+  var passwordLength = Number(passwordLengthPrompt);
+  if (passwordLength < 8 || passwordLength > 128 || isNaN(passwordLengthPrompt) === true) {
+    alert("Your entry is not valid. Please choose number between 8 and 128.");
+    promptPasswordLength();
+  }
+  return passwordLength;
+}
+
+  
+
+
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
+
+// (Number(passwordLengthPrompt) === NaN)
