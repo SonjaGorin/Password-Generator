@@ -3,9 +3,10 @@ lowercaseLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 specialCharacters = ['!', '#', '$', '%', '&', '(', ')', '*', '+', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '['];
 
+// selects the button element
 var generateBtn = document.querySelector("#generate");
 
-// function that calls all the other functions and writes the password to the page
+// main function that calls all the other functions and writes the password to the page
 function writePassword() {
   var [uppercaseConfirm, lowercaseConfirm, numbersConfirm, specialCharactersConfirm] = confirmPasswordCriteria();
   var passwordLength = promptPasswordLength();
@@ -44,7 +45,7 @@ function promptPasswordLength() {
   return passwordLength;
 }
 
-// makes an array of character sets depending on th euser input
+// makes an array of character sets depending on the user input
 function selectedCharacterSets(uppercaseConfirm, lowercaseConfirm, numbersConfirm, specialCharactersConfirm) {
   var characterSets = []
   if (uppercaseConfirm === true) {
