@@ -6,7 +6,7 @@ specialCharacters = ['!', '#', '$', '%', '&', '(', ')', '*', '+', '-', '.', '/',
 // selects the button element
 var generateBtn = document.querySelector("#generate");
 
-// main function that calls all the other functions and writes the password to the page
+// generates password based on user input and writes it to html element
 function writePassword() {
   var [uppercaseConfirm, lowercaseConfirm, numbersConfirm, specialCharactersConfirm] = confirmPasswordCriteria();
   var passwordLength = promptPasswordLength();
