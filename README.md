@@ -14,7 +14,7 @@ N/A
 ## Usage
 To use the Password Generator you can click on the link below.
 
-[Portfolio - Sonja Gorin](http://sonjagorin.github.io/Password-Generator)
+[Password Generator - Sonja Gorin](http://sonjagorin.github.io/Password-Generator)
 
 Page preview:
 
