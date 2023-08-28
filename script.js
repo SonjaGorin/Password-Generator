@@ -5,6 +5,7 @@ specialCharacters = ['!', '#', '$', '%', '&', '(', ')', '*', '+', '-', '.', '/',
 
 var generateBtn = document.querySelector("#generate");
 
+// function that calls all the other functions and writes the password to the page
 function writePassword() {
   var [uppercaseConfirm, lowercaseConfirm, numbersConfirm, specialCharactersConfirm] = confirmPasswordCriteria();
   var passwordLength = promptPasswordLength();
@@ -14,6 +15,8 @@ function writePassword() {
   passwordText.value = password;
 }
 
+// user chooses which character types to include in the password
+// if user doesn't choose any characters they are told they need at least one type and the function runs again
 function confirmPasswordCriteria() {
   var uppercaseConfirm = confirm("Do you want to include uppercase letters in your password?");
   var lowercaseConfirm = confirm("Do you want to include lowercase letters in your password?");
@@ -27,6 +30,10 @@ function confirmPasswordCriteria() {
   return [uppercaseConfirm, lowercaseConfirm, numbersConfirm, specialCharactersConfirm];
 }
 
+// user chooses the length of the password
+// if the user chooses length less than 8 or more than 128 characters 
+// or if they type in a character that is not a number
+// they are told to try again and the function runs again
 function promptPasswordLength() {
   var passwordLengthPrompt = prompt("Choose the length of your password. Type the number between 8 and 128.", "enter number here");
   var passwordLength = Number(passwordLengthPrompt);
@@ -37,6 +44,7 @@ function promptPasswordLength() {
   return passwordLength;
 }
 
+// makes an array of character sets depending on th euser input
 function selectedCharacterSets(uppercaseConfirm, lowercaseConfirm, numbersConfirm, specialCharactersConfirm) {
   var characterSets = []
   if (uppercaseConfirm === true) {
@@ -54,6 +62,22 @@ function selectedCharacterSets(uppercaseConfirm, lowercaseConfirm, numbersConfir
   return characterSets;
 }
 
+function getRandomElement(array) {
+  var randomElement = array[Math.floor(Math.random() * array.length)];
+  return randomElement;
+}
+
+// makes an array of numberOfCharacters random elements 
+function getMultipleRandomElements (array, numberOfCharacters) {
+  var randomElements = [];
+  for (var i = 0; i < numberOfCharacters; i++) {
+    randomElements.push(getRandomElement(array));
+  }
+  return randomElements;
+}
+
+// generates password of given length
+// using characters from given array of characterSets
 function generatePassword(passwordLength, characterSets) {
   var numberOfCharacters = passwordLength / characterSets.length;
   var lastNumberOfCharacters = numberOfCharacters + passwordLength % characterSets.length;
@@ -71,11 +95,5 @@ function generatePassword(passwordLength, characterSets) {
   var shuffledPassword = [...passwordCharacters].sort(() => 0.5 - Math.random()).join("");
   return shuffledPassword;
 } 
-
-function getMultipleRandomElements (array, numberOfCharacters) {
-  const shuffled = [...array].sort(() => 0.5 - Math.random());
-  var chosenElements = shuffled.slice(0, numberOfCharacters);
-  return chosenElements;
-}
 
 generateBtn.addEventListener("click", writePassword);
